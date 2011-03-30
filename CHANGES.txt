@@ -1,0 +1,14 @@
+CHANGES
+=======
+
+2.0 (unreleased)
+----------------
+
+- New output format that is more suitable to accomodate a large amount of
+  results.
+- Restructured and cleaned up the code.
+
+1.0 (unknown)
+-------------
+
+- first incarnation written by Stefan Holek.
