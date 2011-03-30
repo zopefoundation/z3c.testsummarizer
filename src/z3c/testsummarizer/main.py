@@ -26,16 +26,13 @@ from email.Utils import parseaddr
 
 
 # Settings used by the script. You'll want to customize some of these.
-# archive_url = 'http://mail.zope.org/pipermail/zope-tests/'
-archive_url = 'file:///tmp/mail.zope.org/pipermail/zope-tests/'
+archive_url = 'https://mail.zope.org/pipermail/zope-tests/'
+list_name='zope-tests'
+subject_prefix='Zope Tests'
 
 mailfrom = 'Zope tests summarizer <ct+zopetests@gocept.com>'
 mailto = 'zope-dev list <zope-dev@zope.org>'
-smtpserver = 'mail.gocept.net'
-debug_mailto = 'ct@gocept.com'
-
-# used when debugging
-print_not_email = False
+smtpserver = 'localhost'
 
 months = ("January February March April May June July August September "
           "October November December").split()
@@ -153,40 +150,21 @@ def main(argv):
     Get the list of URLs, get the appropriate messages, compose an email,
     send it to the mailing list.
     """
-    usage = 'Usage: list_summarizer.py -C zope|cmf|plone [-T isodate] [-D]'
-    selected_config = ''
+    usage = 'Usage: test-summarizer [-T isodate]'
     selected_date = ''
-    debug_mode = 0
 
     try:
-        options, arg = getopt.getopt(argv, 'hC:T:D')
+        options, arg = getopt.getopt(argv, 'hT:')
     except getopt.GetoptError, e:
         err_exit('%s\n%s' % (e.msg, usage))
 
     for name, value in options:
-        if name == '-C':
-            selected_config = value.strip()+'_summarizer'
-        elif name == '-T':
+        if name == '-T':
             selected_date = value.strip()
-        elif name == '-D':
-            debug_mode = 1
         elif name == '-h':
             err_exit(usage, 0)
         else:
             err_exit(usage)
-
-    configs = {'zope_summarizer': dict(list_name='zope-tests',
-                                       subject_prefix='Zope Tests')}
-
-    if not selected_config in configs:
-        err_exit(usage)
-
-    config = configs[selected_config]
-    globals().update(config)
-
-    if debug_mode:
-        global mailto
-        mailto = debug_mailto
 
     # All dates used are naive dates (no explicit tz).
     now = datetime.datetime.utcnow()
@@ -270,21 +248,12 @@ def main(argv):
     subject = '%s - %s' % (subject_prefix, ', '.join('%s: %s' % x for x in
                                                      sorted(stats.items())))
 
-    if print_not_email:
-        print "Not sending this email."
-        print
-        print "Subject:", subject
-        print "From:", mailfrom
-        print "To:", mailto
-        print
-        print out.getvalue()
-    else:
-        body = "From: %s\nTo: %s\nSubject: %s\n\n%s" % (
-            mailfrom, mailto, subject, out.getvalue())
+    body = "From: %s\nTo: %s\nSubject: %s\n\n%s" % (
+        mailfrom, mailto, subject, out.getvalue())
 
-        fromname, fromaddr = parseaddr(mailfrom)
-        toname, toaddr = parseaddr(mailto)
+    fromname, fromaddr = parseaddr(mailfrom)
+    toname, toaddr = parseaddr(mailto)
 
-        s = smtplib.SMTP(smtpserver, 25)
-        s.sendmail(fromaddr, toaddr, body)
-        s.quit()
+    s = smtplib.SMTP(smtpserver, 25)
+    s.sendmail(fromaddr, toaddr, body)
+    s.quit()
