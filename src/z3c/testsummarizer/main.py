@@ -1,7 +1,6 @@
-#!/usr/bin/env python
 ##############################################################################
 #
-# Copyright (c) 2003,2010 Zope Corporation and Contributors.
+# Copyright (c) 2003,2010,2011 Zope Corporation and Contributors.
 # All Rights Reserved.
 #
 # This software is subject to the provisions of the Zope Public License,
@@ -20,14 +19,11 @@ import getopt
 import urllib2
 import re
 import datetime
-import pprint
 import StringIO
 import rfc822
 import smtplib
-from email.MIMEText import MIMEText
 from email.Utils import parseaddr
 
-__metaclass__ = type
 
 # Settings used by the script. You'll want to customize some of these.
 # archive_url = 'http://mail.zope.org/pipermail/zope-tests/'
@@ -62,8 +58,6 @@ def get_archive(year, month):
     If there is nothing at the appropriate URL for that year and month,
     returns an empty list.
     """
-    if not (1 <= month <= 12):
-        raise ValueError, month
     stem = archive_url + ('%s-%s' % (year, months[month-1]))
     url = '%s/date.html' % stem
     try:
@@ -142,8 +136,6 @@ def monthMinusOne(year, month):
     Returns as a two-tuple (year, month) the year and 1-based month of
     the previous month.
     """
-    if not (1 <= month <= 12):
-        raise ValueError, month
     months = year * 12 + month - 1
     y, m = divmod(months - 1, 12)
     return y, m + 1
@@ -186,7 +178,7 @@ def main(argv):
     configs = {'zope_summarizer': dict(list_name='zope-tests',
                                        subject_prefix='Zope Tests')}
 
-    if not configs.has_key(selected_config):
+    if not selected_config in configs:
         err_exit(usage)
 
     config = configs[selected_config]
@@ -229,20 +221,21 @@ def main(argv):
         if message.date < yesterday:
             break
         messages.append(message)
-    messages.sort(key=lambda m:m.description)
+    messages.sort(key=lambda m: m.description)
 
     out = StringIO.StringIO()
 
-    print >>out, "This is the summary for test reports received on the zope-tests list "
-    print >>out, "between %s UTC and %s UTC:" % (
+    print >>out, "This is the summary for test reports received on the "
+    print >>out, "zope-tests list between %s UTC and %s UTC:" % (
         yesterday.replace(second=0, microsecond=0).isoformat(' '),
         now.replace(second=0, microsecond=0).isoformat(' '))
     print >>out
     print >>out, "See the footnotes for test reports of unsuccessful builds."
     print >>out
-    print >>out, "An up-to date view of the builders is also available in our buildbot"
-    print >>out, "documentation: "
-    print >>out, "http://docs.zope.org/zopetoolkit/process/buildbots.html#the-nightly-builds"
+    print >>out, "An up-to date view of the builders is also available in our "
+    print >>out, "buildbot documentation: "
+    print >>out, "http://docs.zope.org/zopetoolkit/process/buildbots.html"\
+                 "#the-nightly-builds"
     print >>out
     print >>out, "Reports received"
     print >>out, "----------------"
@@ -262,8 +255,10 @@ def main(argv):
     print >>out
 
     for i, message in enumerate(foot_notes):
-        print >>out, ('[%s]' % (i+1)).ljust(6), message.status.ljust(7), message.description
-        print >>out,  ' '*6, message.url
+        print >>out, ('[%s]' % (i+1)).ljust(6), \
+                      message.status.ljust(7), \
+                      message.description
+        print >>out, ' '*6, message.url
         print >>out
         print >>out
 
@@ -284,7 +279,8 @@ def main(argv):
         print
         print out.getvalue()
     else:
-        body = "From: %s\nTo: %s\nSubject: %s\n\n%s" % (mailfrom, mailto, subject, out.getvalue())
+        body = "From: %s\nTo: %s\nSubject: %s\n\n%s" % (
+            mailfrom, mailto, subject, out.getvalue())
 
         fromname, fromaddr = parseaddr(mailfrom)
         toname, toaddr = parseaddr(mailto)
@@ -292,7 +288,3 @@ def main(argv):
         s = smtplib.SMTP(smtpserver, 25)
         s.sendmail(fromaddr, toaddr, body)
         s.quit()
-
-
-if __name__ == '__main__':
-    main(sys.argv[1:])
