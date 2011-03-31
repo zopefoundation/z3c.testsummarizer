@@ -17,10 +17,9 @@
 from email.Utils import parseaddr
 import ConfigParser
 import datetime
-import getopt
+import optparse
 import pkg_resources
 import smtplib
-import sys
 import z3c.testsummarizer.archive
 import z3c.testsummarizer.format
 
@@ -41,41 +40,25 @@ def create_report(archive_url, listname, date):
     return subject, body
 
 
-def err_exit(msg, rc=1):
-    """Bails out."""
-    print >>sys.stderr, msg
-    sys.exit(rc)
-
-
 def main():
     """Get the list of URLs, get the appropriate messages, compose an email,
     send it to the mailing list.
     """
-    usage = 'Usage: test-summarizer [-T YYYY-mm-dd] configfile'
-    date = None
 
-    try:
-        options, args = getopt.getopt(sys.argv, 'hT:')
-    except getopt.GetoptError, e:
-        err_exit('%s\n%s' % (e.msg, usage))
+    usage = 'Usage: %prog [-T YYYY-mm-dd] configfile'
+    parser = optparse.OptionParser(usage=usage)
+    parser.add_option('-T', action='store', dest='date')
+    options, args = parser.parse_args()
 
-    for name, value in options:
-        if name == '-T':
-            date = value.strip()
-        elif name == '-h':
-            err_exit(usage, 0)
-        else:
-            err_exit(usage)
-
-    if len(args) != 2:
-        err_exit(usage)
+    if len(args) != 1:
+        parser.error('configfile is required')
 
     config = ConfigParser.ConfigParser()
-    config.readfp(open(args[1]))
+    config.readfp(open(args[0]))
     config = dict(config.items('testsummarizer'))
 
-    if date:
-        date = datetime.datetime.strptime(date, '%Y-%m-%d')
+    if options.date:
+        date = datetime.datetime.strptime(options.date, '%Y-%m-%d')
     else:
         date = datetime.datetime.utcnow().replace(second=0, microsecond=0)
 
