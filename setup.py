@@ -17,7 +17,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='z3c.testsummarizer',
-    version='2.0',
+    version='2.1dev',
     author='Stefan Holek, Christian Theune, Wolfgang Schnerring',
     author_email='ws@gocept.com',
     url='',
