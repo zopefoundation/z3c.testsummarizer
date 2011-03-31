@@ -1,7 +1,7 @@
 CHANGES
 =======
 
-2.0 (unreleased)
+2.0 (2011-03-31)
 ----------------
 
 - New output format that is more suitable to accomodate a large amount of
