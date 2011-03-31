@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Zope-tests] OK : Zope-2.11 Python-2.4.6 : Linux
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zope-tests%40zope.org?Subject=Re:%20%5BZope-tests%5D%20OK%20%3A%20Zope-2.11%20Python-2.4.6%20%3A%20Linux&In-Reply-To=%3C20110201060643.020FF7504F%40epy.co.at%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="030663.html">
+   <LINK REL="Next"  HREF="030665.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Zope-tests] OK : Zope-2.11 Python-2.4.6 : Linux</H1>
+    <B>Zope Tests</B> 
+    <A HREF="mailto:zope-tests%40zope.org?Subject=Re:%20%5BZope-tests%5D%20OK%20%3A%20Zope-2.11%20Python-2.4.6%20%3A%20Linux&In-Reply-To=%3C20110201060643.020FF7504F%40epy.co.at%3E"
+       TITLE="[Zope-tests] OK : Zope-2.11 Python-2.4.6 : Linux">zope-tests at epy.co.at
+       </A><BR>
+    <I>Tue Feb  1 01:06:43 EST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="030663.html">[Zope-tests] OK : Zope-2.10 Python-2.4.6 : Linux
+</A></li>
+        <LI>Next message: <A HREF="030665.html">[Zope-tests] OK : Zope Buildbot / zopetoolkit-py2.6 slave-ubuntu64
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#30664">[ date ]</a>
+              <a href="thread.html#30664">[ thread ]</a>
+              <a href="subject.html#30664">[ subject ]</a>
+              <a href="author.html#30664">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Zope Tests : OK
+Zope-2.11 Python-2.4.6 : Linux (x86_64)
+
+Running /usr/local/python2.4/bin/python test.py -q --all
+Running unit tests:
+The following test left new threads behind:
+testABOR (zope.server.ftp.tests.test_ftpserver.Tests)
+New thread(s): [&lt;_DummyThread(Dummy-37, started daemon)&gt;, &lt;_DummyThread(Dummy-36, started daemon)&gt;, &lt;_DummyThread(Dummy-38, started daemon)&gt;]
+  Ran 5904 tests with 0 failures and 0 errors in 2 minutes 0.104 seconds.
+Running OFS.tests.testCopySupportEvents.EventLayer tests:
+  Set up OFS.tests.testCopySupportEvents.EventLayer in 0.212 seconds.
+  Ran 14 tests with 0 failures and 0 errors in 0.082 seconds.
+Running OFS.tests.testCopySupportHooks.HookLayer tests:
+  Tear down OFS.tests.testCopySupportEvents.EventLayer in 0.002 seconds.
+  Set up OFS.tests.testCopySupportHooks.HookLayer in 0.214 seconds.
+  Ran 14 tests with 0 failures and 0 errors in 0.098 seconds.
+Running Testing.ZopeTestCase.layer.ZopeLite tests:
+  Tear down OFS.tests.testCopySupportHooks.HookLayer in 0.002 seconds.
+  Set up Testing.ZopeTestCase.layer.ZopeLite in 0.000 seconds.
+  Ran 673 tests with 0 failures and 0 errors in 9.646 seconds.
+Running Testing.ZopeTestCase.testShoppingCart.ShoppingCartLayer tests:
+  Set up Testing.ZopeTestCase.testShoppingCart.ShoppingCartLayer in 0.080 seconds.
+  Ran 16 tests with 0 failures and 0 errors in 0.160 seconds.
+Running Testing.ZopeTestCase.testZODBCompat.ZODBCompatLayer tests:
+  Tear down Testing.ZopeTestCase.testShoppingCart.ShoppingCartLayer in 0.001 seconds.
+  Set up Testing.ZopeTestCase.testZODBCompat.ZODBCompatLayer in 0.001 seconds.
+  Ran 18 tests with 0 failures and 0 errors in 0.037 seconds.
+Running Testing.ZopeTestCase.zopedoctest.testLayerExtraction.TestLayer tests:
+  Tear down Testing.ZopeTestCase.testZODBCompat.ZODBCompatLayer in 0.001 seconds.
+  Set up Testing.ZopeTestCase.zopedoctest.testLayerExtraction.TestLayer in 0.001 seconds.
+  Ran 2 tests with 0 failures and 0 errors in 0.007 seconds.
+Running zope.formlib.tests.FormlibLayer tests:
+  Tear down Testing.ZopeTestCase.zopedoctest.testLayerExtraction.TestLayer in 0.001 seconds.
+  Tear down Testing.ZopeTestCase.layer.ZopeLite in 0.000 seconds.
+  Set up zope.formlib.tests.FormlibLayer in 0.631 seconds.
+  Ran 5 tests with 0 failures and 0 errors in 0.005 seconds.
+Running zope.testbrowser.tests.TestBrowserLayer tests:
+  Tear down zope.formlib.tests.FormlibLayer in 0.002 seconds.
+  Set up zope.testbrowser.tests.TestBrowserLayer in 0.497 seconds.
+  Ran 112 tests with 0 failures and 0 errors in 1.068 seconds.
+Running zope.traversing.tests.layer.TraversingLayer tests:
+  Tear down zope.testbrowser.tests.TestBrowserLayer in 0.002 seconds.
+  Set up zope.traversing.tests.layer.TraversingLayer in 0.450 seconds.
+  Ran 7 tests with 0 failures and 0 errors in 0.151 seconds.
+Tearing down left over layers:
+  Tear down zope.traversing.tests.layer.TraversingLayer in 0.002 seconds.
+Total: 6765 tests, 0 failures, 0 errors in 2 minutes 16.712 seconds.
+
+OK
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="030663.html">[Zope-tests] OK : Zope-2.10 Python-2.4.6 : Linux
+</A></li>
+	<LI>Next message: <A HREF="030665.html">[Zope-tests] OK : Zope Buildbot / zopetoolkit-py2.6 slave-ubuntu64
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#30664">[ date ]</a>
+              <a href="thread.html#30664">[ thread ]</a>
+              <a href="subject.html#30664">[ subject ]</a>
+              <a href="author.html#30664">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://mail.zope.org/mailman/listinfo/zope-tests">More information about the Zope-tests
+mailing list</a><br>
+</body></html>

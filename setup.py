@@ -18,7 +18,7 @@ from setuptools import setup, find_packages
 setup(
     name='z3c.testsummarizer',
     version='2.0dev',
-    author='gocept',
+    author='Stefan Holek, Christian Theune, Wolfgang Schnerring',
     author_email='ws@gocept.com',
     url='',
     description="""\
@@ -37,5 +37,9 @@ setup(
         'setuptools',
     ],
     extras_require=dict(test=[
+    ]),
+    entry_points=dict(console_scripts=[
+        "test-summarizer = z3c.testsummarizer.main:main",
+        "debug-summarizer = z3c.testsummarizer.main:debug"
     ]),
 )
