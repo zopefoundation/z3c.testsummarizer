@@ -15,6 +15,7 @@
 """
 
 from email.Utils import parseaddr
+import ConfigParser
 import datetime
 import getopt
 import pkg_resources
@@ -22,15 +23,6 @@ import smtplib
 import sys
 import z3c.testsummarizer.archive
 import z3c.testsummarizer.format
-
-
-# Settings used by the script. You'll want to customize some of these.
-archive_url = 'https://mail.zope.org/pipermail/zope-tests/'
-listname = 'zope-tests'
-
-mailfrom = 'Zope tests summarizer <ct+zopetests@gocept.com>'
-mailto = 'zope-dev list <zope-dev@zope.org>'
-smtpserver = 'localhost'
 
 
 def create_report(archive_url, listname, date):
@@ -59,36 +51,43 @@ def main():
     """Get the list of URLs, get the appropriate messages, compose an email,
     send it to the mailing list.
     """
-    usage = 'Usage: test-summarizer [-T YYYY-mm-dd]'
-    selected_date = None
+    usage = 'Usage: test-summarizer [-T YYYY-mm-dd] configfile'
+    date = None
 
     try:
-        options, arg = getopt.getopt(sys.argv, 'hT:')
+        options, args = getopt.getopt(sys.argv, 'hT:')
     except getopt.GetoptError, e:
         err_exit('%s\n%s' % (e.msg, usage))
 
     for name, value in options:
         if name == '-T':
-            selected_date = value.strip()
+            date = value.strip()
         elif name == '-h':
             err_exit(usage, 0)
         else:
             err_exit(usage)
 
-    # All dates used are naive dates (no explicit tz).
-    if selected_date:
-        date = datetime.datetime.strptime(selected_date, '%Y-%m-%d')
+    if len(args) != 2:
+        err_exit(usage)
+
+    config = ConfigParser.ConfigParser()
+    config.readfp(open(args[1]))
+    config = dict(config.items('testsummarizer'))
+
+    if date:
+        date = datetime.datetime.strptime(date, '%Y-%m-%d')
     else:
         date = datetime.datetime.utcnow().replace(second=0, microsecond=0)
 
-    subject, body = create_report(archive_url, listname, date)
+    subject, body = create_report(
+        config['archive_url'], config['listname'], date)
     body = "From: %s\nTo: %s\nSubject: %s\n\n%s" % (
-        mailfrom, mailto, subject, body)
+        config['from'], config['to'], subject, body)
 
-    fromname, fromaddr = parseaddr(mailfrom)
-    toname, toaddr = parseaddr(mailto)
+    fromname, fromaddr = parseaddr(config['from'])
+    toname, toaddr = parseaddr(config['to'])
 
-    s = smtplib.SMTP(smtpserver, 25)
+    s = smtplib.SMTP(config['smtpserver'], 25)
     s.sendmail(fromaddr, toaddr, body)
     s.quit()
 
