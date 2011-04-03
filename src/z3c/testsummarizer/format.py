@@ -15,13 +15,13 @@
 import StringIO
 
 
-def create_summary(messages, start, end):
+def create_summary(messages, start, end, listname='zope-tests'):
     messages = sorted(messages, key=lambda m: m.description)
     out = StringIO.StringIO()
 
     print >>out, "This is the summary for test reports received on the "
-    print >>out, "zope-tests list between %s UTC and %s UTC:" % (
-        start.isoformat(' '), end.isoformat(' '))
+    print >>out, "%s list between %s UTC and %s UTC:" % (
+        listname, start.isoformat(' '), end.isoformat(' '))
     print >>out
     print >>out, "See the footnotes for test reports of unsuccessful builds."
     print >>out

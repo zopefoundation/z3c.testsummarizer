@@ -28,7 +28,8 @@ def create_report(archive_url, listname, date):
     yesterday = date - datetime.timedelta(days=1)
     archive = z3c.testsummarizer.archive.Archive(archive_url)
     messages = archive.messages_sent_on(date)
-    body = z3c.testsummarizer.format.create_summary(messages, yesterday, date)
+    body = z3c.testsummarizer.format.create_summary(messages, yesterday, 
+                                                    date, listname)
 
     stats = {}
     for message in messages:
