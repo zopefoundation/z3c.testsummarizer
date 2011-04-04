@@ -5,6 +5,14 @@ CHANGES
 ----------------
 
 - Use the correct list name in summary
+- Make sure to reverse the list of message URLs for a given 
+  month so the newest messages come first.
+- Fix the date handling differences so that both explicitly 
+  passed dates ("-T") and automatically substituted dates are
+  handled the same.
+- Fix and simplify date matching logic so that only entries 
+  between 00:00 and 23:59 of a given (or automatically 
+  substituted date) match.
 
 
 2.0 (2011-03-31)

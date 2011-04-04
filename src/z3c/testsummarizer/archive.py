@@ -32,7 +32,6 @@ class Archive(object):
             self.month_add(date, -1))
         urls = this_month_urls + last_month_urls
 
-        yesterday = date - datetime.timedelta(days=1)
         tomorrow = date + datetime.timedelta(days=1)
 
         result = []
@@ -40,7 +39,7 @@ class Archive(object):
             message = z3c.testsummarizer.message.Message.load(url)
             if message.date >= tomorrow:
                 continue
-            if message.date < yesterday:
+            if message.date < date:
                 break
             result.append(message)
         return result
@@ -62,7 +61,10 @@ class Archive(object):
                 raise
         data = f.read()
         results = re.compile(r'(\d{6}.html)', re.M).findall(data)
-        return ['%s/%s' % (stem, result) for result in results]
+        results = ['%s/%s' % (stem, result) for result in results]
+        results.sort()
+        results.reverse()
+        return results
 
     @staticmethod
     def month_add(date, amount):

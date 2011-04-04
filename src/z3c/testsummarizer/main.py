@@ -61,7 +61,8 @@ def main():
     if options.date:
         date = datetime.datetime.strptime(options.date, '%Y-%m-%d')
     else:
-        date = datetime.datetime.utcnow().replace(second=0, microsecond=0)
+        date = datetime.datetime.combine(datetime.datetime.today(), 
+                                         datetime.time(0, 0))
 
     subject, body = create_report(
         config['archive_url'], config['listname'], date)
